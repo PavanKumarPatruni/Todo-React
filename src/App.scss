@@ -1,0 +1,27 @@
+@import "./components/header/header.scss";
+
+@import "./components/todo/TodoBox/todo-box.scss";
+
+@import "./components/todo/TodoCreator/todo-creator.scss";
+
+@import "./components/todo/TodoList/todo-list.scss";
+
+@import "./components/todo/TodoItem/todo-item.scss";
+
+@import "./components/todo/TodoOptions/todo-options.scss";
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  margin: auto;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 96%;
+  }
+}
