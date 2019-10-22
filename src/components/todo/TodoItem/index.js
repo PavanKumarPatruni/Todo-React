@@ -37,7 +37,13 @@ class TodoItem extends React.Component {
         this.props.completeTodo(id);
     }
 
-    onSave = e => {
+    onEnterClick = e => {
+        if(e.key === 'Enter') {
+            this.onSave();
+        }
+    }
+
+    onSave = () => {
         const { unsave } = this.state;
 
         this.setState({
@@ -73,7 +79,7 @@ class TodoItem extends React.Component {
                 {
                     edit ? (
                         <>
-                            <input className="todo-label edit-input" type="text" value={unsave} onChange={this.onChange}/>
+                            <input className="todo-label edit-input" type="text" value={unsave} onChange={this.onChange} onKeyDown={this.onEnterClick}/>
                             <img className="todo-option-icon second-icon" alt="save" src={saveIcon} onClick={this.onSave}/>
                             <img className="todo-option-icon" alt="cancel" src={cancelIcon} onClick={this.onEdit}/>
                         </>
