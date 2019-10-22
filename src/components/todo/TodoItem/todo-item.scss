@@ -7,12 +7,19 @@
     border-bottom: solid 1px #0000001f;
 
     .todo-label {
-        width: 95%;
+        width: 88%;
         padding: 15px;
         font-weight: 300;
         box-sizing: border-box;
         position: relative;
         padding-left: 50px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        &.edit-input {
+            font-size: 16px;
+            outline: none;
+        }
 
         input {
             display: none;
@@ -65,15 +72,19 @@
 
     }
     
-    .delete-item {
+    .todo-option-icon {
         position: absolute;
         right: 10px;
         opacity: 0;
         height: 20px;
         cursor: pointer;
+
+        &.second-icon {
+            right: 40px;
+        }
     }
 }
 
-.todo-item:hover .delete-item {
+.todo-item:hover .todo-option-icon {
     opacity: 0.3;
 }

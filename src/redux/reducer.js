@@ -1,6 +1,7 @@
 import {
     COMPLETE_TODO,
     DELETE_TODO,
+    UPDATE_TODO,
     ADD_TODO,
     CLEAR_COMPLETED
 
@@ -25,10 +26,25 @@ const reducer = (state = initState, action) => {
 
             return Object.assign({}, state, { todos: [...todos] });
         }
+
         case DELETE_TODO : {
             let { todos } = state;
             const { id } = action;
             todos = todos.filter(item => item.id !== id);
+
+            return Object.assign({}, state, { todos: [...todos] });
+        }
+
+        case UPDATE_TODO : {
+            let { todos } = state;
+            const { todo } = action;
+
+            todos = todos.map(item => {
+                if (item.id === todo.id) {
+                    return todo;
+                }
+                return item;
+            });
 
             return Object.assign({}, state, { todos: [...todos] });
         }

@@ -1,6 +1,7 @@
 import {
     COMPLETE_TODO,
     DELETE_TODO,
+    UPDATE_TODO,
     ADD_TODO,
     CLEAR_COMPLETED
 
@@ -17,6 +18,13 @@ export const deleteTodo = id => {
     return {
         type: DELETE_TODO,
         id
+    };
+}
+
+export const updateTodo = todo => {
+    return {
+        type: UPDATE_TODO,
+        todo
     };
 }
 

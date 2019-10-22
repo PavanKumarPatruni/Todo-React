@@ -1,5 +1,8 @@
 import React from 'react';
 import deleteIcon from '../../../assets/images/icon-delete.png';
+import editIcon from '../../../assets/images/icon-edit.png';
+import saveIcon from '../../../assets/images/icon-save.png';
+import cancelIcon from '../../../assets/images/icon-cancel.png';
 
 class TodoItem extends React.Component {
 
@@ -10,8 +13,18 @@ class TodoItem extends React.Component {
             completed: props.value.completed,
             todo: props.value.todo,
             timestamp: props.value.timestamp,
-            id: props.value.id
+            id: props.value.id,
+            edit: false,
+            unsave: props.value.todo
         }
+    }
+
+    onChange = e => {
+        const unsave = e.target.value;
+
+        this.setState({
+            unsave
+        });
     }
 
     onComplete = e => {
@@ -24,22 +37,57 @@ class TodoItem extends React.Component {
         this.props.completeTodo(id);
     }
 
+    onSave = e => {
+        const { unsave } = this.state;
+
+        this.setState({
+            todo: unsave,
+            unsave: "",
+            edit: false
+        }, () => {
+            const {id, completed, todo, timestamp} = this.state;
+            this.props.updateTodo({id, completed, todo, timestamp});
+        });
+    }
+
+    onEdit = e => {
+        let { edit, todo } = this.state;
+        edit = !edit;
+        this.setState({
+            edit,
+            unsave: todo
+        });
+    }
+
     onDelete = e => {
-        let { id } = this.state;    
+        const { id } = this.state;    
         this.props.deleteTodo(id);
     }
 
     render() {
 
-        let { todo, completed } = this.state;
+        let { edit, todo, unsave, completed } = this.state;
 
         return (
             <div className="todo-item">
-                <label className={"todo-label " + (completed ? "completed" : "")}>{todo}
-                    <input type="checkbox" checked={completed} onChange={this.onComplete}/>
-                    <span className="checkmark"></span>
-                </label>
-                <img className="delete-item" alt="delete" src={deleteIcon} onClick={this.onDelete}/>
+                {
+                    edit ? (
+                        <>
+                            <input className="todo-label edit-input" type="text" value={unsave} onChange={this.onChange}/>
+                            <img className="todo-option-icon second-icon" alt="save" src={saveIcon} onClick={this.onSave}/>
+                            <img className="todo-option-icon" alt="cancel" src={cancelIcon} onClick={this.onEdit}/>
+                        </>
+                    ) : (
+                        <>
+                            <label className={"todo-label " + (completed ? "completed" : "")}>{todo}
+                                <input type="checkbox" checked={completed} onChange={this.onComplete}/>
+                                <span className="checkmark"></span>
+                            </label>
+                            <img className="todo-option-icon second-icon" alt="edit" src={editIcon} onClick={this.onEdit}/>
+                            <img className="todo-option-icon" alt="delete" src={deleteIcon} onClick={this.onDelete}/>
+                        </>
+                    )
+                }
             </div>
         )
     }
